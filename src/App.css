@@ -1,5 +1,19 @@
+body {
+  background-image: linear-gradient(to top, #063c47, #000000);
+  background-attachment: fixed;
+}
+
 .App {
   text-align: center;
+}
+
+.cover-image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  object-fit: contain;
+  opacity: 0.15;
+  z-index: -1;
 }
 
 .App-logo {
