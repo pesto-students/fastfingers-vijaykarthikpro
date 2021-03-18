@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
 import SignUp from './components/SignUpPage/SignUp';
 import Game from './components/GamePage/Game'
 
-export default function Router() {
+export default class Router extends Component {
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            path: 'SignUp'
+        }
+    }
 
-    console.log(window.location.href)
-    console.log(window.location.pathname)
-    let path = window.location.pathname
+    handlePageNavigation = (pathName) =>{
+        console.log("router called path: ",pathName);
+        this.setState({path: pathName})
+        //    window.location.pathname = pathName;
+    }
 
-    if(path === '/') {
-       return <SignUp />
-    } else if (path === '/game' ) {
-        return <Game />
+    render() {
+        let { path } = this.state;
+        console.log("path: ",path)
+        if(path === 'SignUp') {
+            return <SignUp handlePageNavigation={this.handlePageNavigation}/>
+        } else {
+            return <Game handlePageNavigation={this.handlePageNavigation}/>
+        }
     }
     
 }

@@ -1,0 +1,74 @@
+@use '../../library' as library;
+
+.main {
+    margin: 40px;
+    color: library.$primary-font-color;
+
+    .header-container {
+        display: block;
+        padding: 0px;
+        line-height: 1.4;
+        font-size: 44px;
+
+        .player-name-title {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .level-score {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        img {
+            margin: 0 10px 0 0;
+        }
+    }
+
+    .game-container {
+        display: flex;
+        margin-top: 40px;
+        height: 80vh;
+
+        .score-board {
+            @include library.flex-column-center;
+            justify-content: flex-start;
+            border: library.$primary-font-color solid;
+            border-radius: 10px;
+            width: 300px;
+            
+        }
+
+        .play-game {
+            @include library.flex-column-center;
+            width: 100%;
+        }
+
+    }
+
+    .stop-game-btn {
+        @include library.flex-row-center;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        transform: scale(1);
+        padding: 0px;
+
+        img {
+            margin-left: -20px;
+        }
+
+        span {
+            font-size: 48px;
+            color: library.$primary-font-color;
+        }
+
+        &:hover {
+            transform: scale(1.15);
+        }
+
+        &:active {
+            transform: scale(1);
+        }
+    }
+}

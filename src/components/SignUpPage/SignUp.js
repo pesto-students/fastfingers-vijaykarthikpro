@@ -27,47 +27,48 @@ export default class SignUp extends Component {
         e.preventDefault()
         this.setState({ name:"", selectLevel : difficultyLevels.EASY }) 
         console.log(window.location.href)
-        window.location.replace(`${window.location.href}game`)
+        // window.location.pathname = 'game'
+        this.props.handlePageNavigation('Game')
+        // Router(`${window.location.pathname}`)
     }
 
     render() {
 
-        const { name } = this.state;
-
-        const options = Object.values(difficultyLevels).map((value, index) => {
-          return  <option key={index}>{value}</option>
-        })
-        return (<div className="container">
-            <img src={KeyboardSvg} alt="img"/>
-            <span className="title">fast fingers</span>
-            <div className="inner-container">
-                <div className="sub-title"> 
-                    <span className="red-line"/>
-                    <p >the ultimate typing game</p>
-                    <span className="red-line"/>
-                </div>
-                <form>
-                    <input
-                    type="text"
-                    name="name"
-                    placeholder={ defaultTexts.TYPE_YOUR_NAME }
-                    value={name}
-                    onChange={this.handleNameChange}
-                    required/>
-
-                    <select  defaultValue={defaultTexts.DIFFICULTY_LEVEL} onChange={this.handleSelection} required>
-                        <option value={defaultTexts.DIFFICULTY_LEVEL}  disabled hidden>
-                            {defaultTexts.DIFFICULTY_LEVEL}
-                        </option>
-                        {options}
-                    </select>
-
-                    <button className="start-game-btn" onClick={this.handleSubmission}>
-                        <img src={PlayIconSvg} alt="play icon"/>
-                        <span>{defaultTexts.START_GAME}</span>
-                    </button>
-                </form>
-            </div>
-        </div>)
+            let { name } = this.state;
+            const options = Object.values(difficultyLevels).map((value, index) => {
+                return  <option key={index}>{value}</option>
+              })
+              return (<div className="container">
+                  <img src={KeyboardSvg} alt="img"/>
+                  <span className="title">fast fingers</span>
+                  <div className="inner-container">
+                      <div className="sub-title"> 
+                          <span className="red-line"/>
+                          <p >the ultimate typing game</p>
+                          <span className="red-line"/>
+                      </div>
+                      <form>
+                          <input
+                          type="text"
+                          name="name"
+                          placeholder={ defaultTexts.TYPE_YOUR_NAME }
+                          value={name}
+                          onChange={this.handleNameChange}
+                          required/>
+      
+                          <select  defaultValue={defaultTexts.DIFFICULTY_LEVEL} onChange={this.handleSelection} required>
+                              <option value={defaultTexts.DIFFICULTY_LEVEL}  disabled hidden>
+                                  {defaultTexts.DIFFICULTY_LEVEL}
+                              </option>
+                              {options}
+                          </select>
+      
+                          <button className="start-game-btn" onClick={this.handleSubmission}>
+                              <img src={PlayIconSvg} alt="play icon"/>
+                              <span>{defaultTexts.START_GAME}</span>
+                          </button>
+                      </form>
+                  </div>
+              </div>)
     }
 }
