@@ -4,7 +4,9 @@ import Game from './components/GamePage/Game'
 
 export default function Router() {
 
-   const path = window.location.pathname
+    console.log(window.location.href)
+    console.log(window.location.pathname)
+    let path = window.location.pathname
 
     if(path === '/') {
        return <SignUp />
