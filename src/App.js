@@ -1,13 +1,14 @@
 import React from 'react';
 import './App.css';
-import SignUp from './components/SignUpPage/SignUp'
 import FastFingersCoverImage from './images/FastFingersCoverImage.svg'
+import Router from './Router'
 
 function App() {
+
   return (
     <div className="App">
       <img className="cover-image" src={FastFingersCoverImage} alt="CoverImage"/>
-      <SignUp />
+      <Router />
     </div>
   );
 }

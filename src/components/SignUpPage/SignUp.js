@@ -26,7 +26,7 @@ export default class SignUp extends Component {
     handleSubmission = (e) => {
         e.preventDefault()
         this.setState({ name:"", selectLevel : difficultyLevels.EASY }) 
-        console.log(window.location.href);
+        window.location.pathname = "/game"
     }
 
     render() {
