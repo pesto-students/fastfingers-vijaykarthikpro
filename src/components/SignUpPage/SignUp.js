@@ -5,7 +5,6 @@ import PlayIconSvg from '../../images/play-icon.svg'
 import { difficultyLevels, defaultTexts } from '../../constants'
 
 export default class SignUp extends Component {
-
     constructor(props){
         super(props);
         this.state = {
@@ -21,13 +20,13 @@ export default class SignUp extends Component {
 
     handleSelection = (event) =>{
         let {target:{value}} = event;
-        this.selectedLevel = value;
         this.setState({selectLevel: value})
     }
 
     handleSubmission = (e) => {
         e.preventDefault()
         this.setState({ name:"", selectLevel : difficultyLevels.EASY }) 
+        console.log(window.location.href);
     }
 
     render() {

@@ -8,10 +8,11 @@ body {
 }
 
 .cover-image {
-  position: absolute;
-  left: 0;
-  top: 0;
-  object-fit: contain;
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  min-width: 100%;
+  min-height: 100%;
   opacity: 0.15;
   z-index: -1;
 }
