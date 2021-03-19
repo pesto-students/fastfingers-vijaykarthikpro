@@ -5,12 +5,9 @@ import GamepadIcon from '../../images/gamepad-icon.svg';
 import CrossIcon from '../../images/cross-icon.svg'
 
 export default class Game extends Component {
-    constructor(props) {
-        super(props);
-    }
-    handleGoBack = ()  =>{
-        this.props.handlePageNavigation('SignUp');
-    }
+    // handleGoBack = ()  =>{
+    //     this.props.handlePageNavigation('SignUp');
+    // }
     
     render() {
         return (<div className="main">
@@ -36,10 +33,12 @@ export default class Game extends Component {
                     <h3>SCORE BOARD</h3>
                 </div>
                 <div className="play-game">
-                    <span>Game play</span>
+                    <form>
+                        <input type="text" />
+                    </form>
                 </div>        
             </div>
-            <button className="stop-game-btn" onClick={this.handleGoBack}>
+            <button className="stop-game-btn">
                 <img src={CrossIcon} alt=""/>
                 <span>STOP GAME</span>
             </button>  
