@@ -17,6 +17,14 @@ body {
   z-index: -1;
 }
 
+/* .background-black {
+  background-image: linear-gradient(to bottom, #000000, transparent);
+  background-attachment: fixed;
+  z-index: -1;
+  min-width: 100%;
+  min-height: 100%;
+} */
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

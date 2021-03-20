@@ -19,128 +19,141 @@
 .container {
     @include library.flex-column-center;
     color: library.$primary-font-color;
-    margin: 40vh 0 40vh 0;
+    background: linear-gradient(to bottom, black, transparent);
     height: 100vh;
 
-    .title {
-        font-size: 80px;
-    }
+    .box {
+        @include library.flex-column-center;
 
-    .inner-container {
-        width: 622px;
-
-        .sub-title {
-            @include library.flex-row-center;
-            justify-content: space-between;
-            
-            .red-line {
-                height: 0px;
-                width: 20%;
-                border: 1px solid library.$primary-font-color;
-            }
-
-            p {
-                font-size: 26px;
-                line-height: 0.2;
-            }
+        .title {
+            font-size: 80px;
         }
-
     
-        form {
+        .inner-container {
+            width: 622px;
     
-            display: flex;
-            flex-direction: column;
-            margin: 60px 0px 60px 0px;
-            
-            input {
-                @include form-fields-style(35px, 20px);
-                border: none;
-                background-color: library.$cool-grey-two;
-    
-                @include placeholder {  
-                    color: black;          
-                }            
-            }
-    
-            select {
-               @include form-fields-style(35px, 20px);
-                border: 1px solid library.$cool-grey-two;
-                background-color: transparent;
-                color: library.$cool-grey-two;
+            .sub-title {
+                @include library.flex-row-center;
+                justify-content: space-between;
                 
-                &:invalid {
-                    color: library.$cool-grey-two;
+                .red-line {
+                    height: 0px;
+                    width: 20%;
+                    border: 1px solid library.$primary-font-color;
                 }
     
-                option {
-                    color: black;
+                p {
+                    font-size: 26px;
+                    line-height: 0.2;
                 }
-
+            }
+    
+        
+            form {
+        
+                display: flex;
+                flex-direction: column;
+                margin: 30px 0px 80px 0px;
+                
+                input {
+                    @include form-fields-style(35px, 20px);
+                    border: none;
+                    background-color: library.$cool-grey-two;
+        
+                    @include placeholder {  
+                        color: black;          
+                    }            
+                }
+        
+                select {
+                   @include form-fields-style(35px, 20px);
+                    border: 1px solid library.$cool-grey-two;
+                    background-color: transparent;
+                    color: library.$cool-grey-two;
+                    
+                    &:invalid {
+                        color: library.$cool-grey-two;
+                    }
+        
+                    option {
+                        color: black;
+                    }
+    
+                }
+            }
+    
+        }
+    
+    
+        .start-game-btn {
+            @include library.flex-row-center;
+            font-size:48px;
+            color: library.$primary-font-color;
+            background: transparent;
+            border: none;
+            outline: none;
+            margin-top: 80px;
+            cursor: pointer;
+    
+            &:hover {
+                transform: scale(1.05);
+            }
+    
+            &:active {
+                transform: scale(1);
             }
         }
 
     }
 
-
-    .start-game-btn {
-        @include library.flex-row-center;
-        font-size:48px;
-        color: library.$primary-font-color;
-        background: transparent;
-        border: none;
-        outline: none;
-        margin-top: 60px;
-        cursor: pointer;
-
-        &:hover {
-            transform: scale(1.05);
-        }
-
-        &:active {
-            transform: scale(1);
-        }
-    }
+    
 }
 
-/* @media (max-width: 1370px) {
+@media (max-width: 1370px) {
     .container {
-        margin: 8vh 0 8vh 0;
-        img {
-            width: 160px;
-        }
-        .title {
-            font-size: 50px;
-        }
 
-        .inner-container {
-            width: 422px;
-
-            .sub-title {
-                
-                p {
-                    font-size: 20px;
-                }
-            }
-
-            form {
-                margin: 30px 0 30px 0;
-
-                input {
-                    @include form-fields-style(20px, 16px)
-                }
-
-                select {
-                    @include form-fields-style(20px, 16px )
-                }
-            }
-        }
-
-        .start-game-btn {
-            font-size:28px;
+        .box{
 
             img {
-                width: 50px;
+                width: 160px;
+            }
+            .title {
+                font-size: 50px;
+            }
+    
+            .inner-container {
+                width: 422px;
+    
+                .sub-title {
+                    
+                    p {
+                        font-size: 20px;
+                    }
+                }
+    
+                form {
+                    margin: 30px 0 30px 0;
+    
+                    input {
+                        @include form-fields-style(20px, 16px)
+                    }
+    
+                    select {
+                        @include form-fields-style(20px, 16px )
+                    }
+                }
+            }
+    
+            .start-game-btn {
+                font-size:28px;
+    
+                img {
+                    width: 50px;
+                }
             }
         }
-    }
-} */
+
+        }
+
+        
+}

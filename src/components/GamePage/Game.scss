@@ -1,12 +1,13 @@
 @use '../../library' as library;
 
 .main {
-    margin: 40px;
     color: library.$primary-font-color;
+    background: linear-gradient(to bottom, black, transparent);
+    height: 100vh;
 
     .header-container {
         display: block;
-        padding: 0px;
+        padding: 20px;
         line-height: 1.4;
         font-size: 44px;
 
@@ -27,8 +28,9 @@
 
     .game-container {
         display: flex;
-        margin-top: 40px;
-        height: 80vh;
+        padding: 40px 20px 20px 20px;
+        justify-content: space-around;
+        flex-grow: 1;
 
         .score-board {
             @include library.flex-column-center;
@@ -42,6 +44,16 @@
         .play-game {
             @include library.flex-column-center;
             width: 100%;
+
+            span {
+                font-size: 32px;
+                color: white;
+            }
+
+            p {
+                font-size: 56px;
+                color: white;
+            }
 
             input[type="text"] {
                 width: 400px;
@@ -64,10 +76,6 @@
         background-color: transparent;
         transform: scale(1);
         padding: 0px;
-
-        img {
-            margin-left: -20px;
-        }
 
         span {
             font-size: 48px;
