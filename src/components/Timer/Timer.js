@@ -1,4 +1,4 @@
-/* import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
 export default function Timer({ remainingTime }) {
@@ -101,4 +101,4 @@ export default function Timer({ remainingTime }) {
         )}</span>
       </div>
     )
-} */
+}

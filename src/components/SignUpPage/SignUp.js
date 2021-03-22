@@ -49,12 +49,9 @@ export default function SignUp({ handlePageNavigation }) {
                           required/>
       
                           <select  
-                            defaultValue={defaultTexts.DIFFICULTY_LEVEL} 
+                            defaultValue={difficultyLevels.EASY} 
                             onChange={(e) => { setSelectLevel(e.target.value)}} 
                             required>
-                              <option value={defaultTexts.DIFFICULTY_LEVEL}  disabled hidden>
-                                  {defaultTexts.DIFFICULTY_LEVEL}
-                              </option>
                               {options}
                           </select>
       

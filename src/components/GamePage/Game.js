@@ -25,19 +25,19 @@ export default function Game() {
 
     if( level === difficultyLevels.EASY ) {
 
-         initialWord = easyWords[Math.floor(Math.random() * easyWords.length)];
+         initialWord = easyWords[Math.floor(Math.random() * easyWords.length)].toUpperCase();
          difficultyFactor = difficultyFactors.EASY
          timerValue = Math.ceil( initialWord.length / 1 );
 
     } else if ( level === difficultyLevels.MEDIUM ) {
 
-         initialWord = mediumWords[Math.floor(Math.random() * mediumWords.length)];
+         initialWord = mediumWords[Math.floor(Math.random() * mediumWords.length)].toUpperCase();
          difficultyFactor = difficultyFactors.MEDIUM
          timerValue = Math.ceil( initialWord.length / 1.5 );
 
     } else if ( level === difficultyLevels.HARD ) {
 
-        initialWord = hardWords[Math.floor(Math.random() * hardWords.length)];
+        initialWord = hardWords[Math.floor(Math.random() * hardWords.length)].toUpperCase();
         difficultyFactor = difficultyFactors.HARD
         timerValue = Math.ceil( initialWord.length / 2 );
 
@@ -60,17 +60,17 @@ export default function Game() {
         switch(level) {
             case constants.difficultyLevels.EASY :
             {
-                setRandomWord(easyWords[Math.floor(Math.random() * easyWords.length)]);
+                setRandomWord(easyWords[Math.floor(Math.random() * easyWords.length)].toUpperCase());
                 setTypedWord('');
                 break;
             }
             case constants.difficultyLevels.MEDIUM : {
-                setRandomWord(mediumWords[Math.floor(Math.random() * mediumWords.length)]);
+                setRandomWord(mediumWords[Math.floor(Math.random() * mediumWords.length)].toUpperCase());
                 setTypedWord('');
                 break;
             }
             case constants.difficultyLevels.HARD : {
-                setRandomWord(hardWords[Math.floor(Math.random() * hardWords.length)]);
+                setRandomWord(hardWords[Math.floor(Math.random() * hardWords.length)].toUpperCase());
                 setTypedWord('');
                 break;
             }
