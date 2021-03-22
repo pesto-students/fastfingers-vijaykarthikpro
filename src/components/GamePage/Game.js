@@ -25,19 +25,19 @@ export default function Game() {
 
     if( level === difficultyLevels.EASY ) {
 
-         initialWord = easyWords[Math.floor(Math.random() * easyWords.length)].toUpperCase();
+         initialWord = easyWords[Math.floor(Math.random() * easyWords.length)];
          difficultyFactor = difficultyFactors.EASY
          timerValue = Math.ceil( initialWord.length / 1 );
 
     } else if ( level === difficultyLevels.MEDIUM ) {
 
-         initialWord = mediumWords[Math.floor(Math.random() * mediumWords.length)].toUpperCase();
+         initialWord = mediumWords[Math.floor(Math.random() * mediumWords.length)];
          difficultyFactor = difficultyFactors.MEDIUM
          timerValue = Math.ceil( initialWord.length / 1.5 );
 
     } else if ( level === difficultyLevels.HARD ) {
 
-        initialWord = hardWords[Math.floor(Math.random() * hardWords.length)].toUpperCase();
+        initialWord = hardWords[Math.floor(Math.random() * hardWords.length)];
         difficultyFactor = difficultyFactors.HARD
         timerValue = Math.ceil( initialWord.length / 2 );
 
@@ -60,17 +60,17 @@ export default function Game() {
         switch(level) {
             case constants.difficultyLevels.EASY :
             {
-                setRandomWord(easyWords[Math.floor(Math.random() * easyWords.length)].toUpperCase());
+                setRandomWord(easyWords[Math.floor(Math.random() * easyWords.length)]);
                 setTypedWord('');
                 break;
             }
             case constants.difficultyLevels.MEDIUM : {
-                setRandomWord(mediumWords[Math.floor(Math.random() * mediumWords.length)].toUpperCase());
+                setRandomWord(mediumWords[Math.floor(Math.random() * mediumWords.length)]);
                 setTypedWord('');
                 break;
             }
             case constants.difficultyLevels.HARD : {
-                setRandomWord(hardWords[Math.floor(Math.random() * hardWords.length)].toUpperCase());
+                setRandomWord(hardWords[Math.floor(Math.random() * hardWords.length)]);
                 setTypedWord('');
                 break;
             }
