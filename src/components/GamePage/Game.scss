@@ -48,16 +48,19 @@
             span {
                 font-size: 32px;
                 color: white;
+                margin-right: 120px;
             }
 
             p {
                 font-size: 56px;
                 color: white;
+                margin-right: 120px;
             }
 
             input[type="text"] {
                 width: 400px;
-                padding: 20px;
+                padding: 10px;
+                margin-right: 120px;
                 opacity: 0.59;
                 outline: none;
                 font-size: 32px;
@@ -78,7 +81,7 @@
         padding: 0px;
 
         span {
-            font-size: 48px;
+            font-size: 42px;
             color: library.$primary-font-color;
         }
 
@@ -90,4 +93,22 @@
             transform: scale(1);
         }
     }
+}
+
+@media (max-width: 1370px) {
+
+    .main {
+
+        .header-container {
+            font-size: 32px;
+        }
+    
+        .stop-game-btn {
+            span {
+                font-size: 42px;
+            }
+        }
+
+    }
+    
 }
