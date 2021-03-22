@@ -37,13 +37,14 @@
             justify-content: flex-start;
             border: library.$primary-font-color solid;
             border-radius: 10px;
-            width: 300px;
+            width: 250px;
             
         }
 
         .play-game {
             @include library.flex-column-center;
             width: 100%;
+            padding: 0px;
 
             span {
                 font-size: 32px;
@@ -101,11 +102,20 @@
 
         .header-container {
             font-size: 32px;
+
+            img {
+                width: 30px;
+            }
         }
     
         .stop-game-btn {
+
+            img {
+                width: 60px;
+            }
+
             span {
-                font-size: 42px;
+                font-size: 32px;
             }
         }
 

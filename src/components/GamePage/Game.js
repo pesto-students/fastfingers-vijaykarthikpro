@@ -54,7 +54,6 @@ export default function Game() {
     
     const handleTextChange = (e) => {
         setTypedWord(e.target.value);
- 
     }
 
     function changeWord(level) {
@@ -94,14 +93,12 @@ export default function Game() {
     }
 
 
-
-
     return (<div className="main">
             <div className="header-container">
                 <div className="player-name-title">
                     <div className="player-name">
                         <img src={PersonIcon}  alt=""/>
-                        <span>{name}</span>
+                        <span>Player: {name}</span>
                     </div>
                     <span className="title">fast fingers</span>
                 </div>
