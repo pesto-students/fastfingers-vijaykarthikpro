@@ -3,8 +3,7 @@
 @mixin form-fields-style($font-size, $padding) {
     font-size: $font-size;
     padding: $padding;
-    margin-bottom: 20px;
-    border-radius: 15px;
+    border-radius: 12px;
     box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.8);
     outline: none;
 }
@@ -53,33 +52,77 @@
         
                 display: flex;
                 flex-direction: column;
-                margin: 30px 0px 80px 0px;
+                margin: 30px 0 80px 0;
                 
                 input {
                     @include form-fields-style(35px, 20px);
                     border: none;
+                    margin: 0;
                     background-color: library.$cool-grey-two;
         
                     @include placeholder {  
                         color: black;          
                     }            
                 }
-        
-                select {
-                   @include form-fields-style(35px, 20px);
-                    border: 1px solid library.$cool-grey-two;
-                    background-color: transparent;
-                    color: library.$cool-grey-two;
-                    
-                    &:invalid {
-                        color: library.$cool-grey-two;
-                    }
-        
-                    option {
-                        color: black;
-                    }
-    
+
+                .error-message {
+                    text-align: start;
+                    line-height: 0;
+                    margin: 10px;
+                    padding: 4px 0 2px 20px;
+                    font-size: 20px;
                 }
+
+                .select-wrapper {
+                    position: relative;
+                    margin-top: 30px;
+
+                    select {
+                        display: flex;
+                        @include form-fields-style(35px, 20px);
+                         border: 1px solid library.$cool-grey-two;
+                         width: 100%;
+                         background-color: transparent;
+                         color: library.$cool-grey-two;
+
+                         -webkit-appearance: none;
+                         -moz-appearance: none;
+                         -ms-appearance: none;
+                         -o-appearance: none;
+                         appearance: none;
+                         
+                         &:invalid {
+                             color: library.$cool-grey-two;
+                         }
+             
+                         option {
+                             color: black;
+                             background-color: library.$cool-grey-two;
+                             font-size: 25px;
+
+                             &:hover::after {
+                                 background-color:#053a45;
+                             }
+                         }
+         
+                     }
+
+                     &:after {
+                        position: absolute;
+                        content: "";
+                        top: 34px;
+                        right: 30px;
+                        width: 0; 
+                        height: 0; 
+                        border-left: 10px solid transparent;
+                        border-right: 10px solid transparent;
+                        border-top: 10px solid;
+                        border-color: #97a4a7 transparent transparent transparent;
+                    }
+
+                }
+        
+                
             }
     
         }
@@ -92,7 +135,7 @@
             background: transparent;
             border: none;
             outline: none;
-            margin-top: 80px;
+            margin-top: 90px;
             cursor: pointer;
     
             &:hover {
@@ -115,32 +158,61 @@
         .box{
 
             img {
-                width: 160px;
+                width: 120px;
             }
             .title {
-                font-size: 50px;
+                font-size: 40px;
             }
     
             .inner-container {
-                width: 422px;
+                width: 362px;
     
                 .sub-title {
                     
                     p {
-                        font-size: 20px;
+                        font-size: 16px;
                     }
                 }
     
                 form {
-                    margin: 30px 0 30px 0;
+                    margin: 20px 0 30px 0;
     
                     input {
-                        @include form-fields-style(20px, 16px)
+                        @include form-fields-style(18px, 16px)
+                    }
+
+                    .error-message {
+                        font-size: 16px;
+                        padding: 2px 0 1px 10px;
+                    }
+
+                    .select-wrapper {
+                        margin-top: 20px;
+
+                        select {
+                            @include form-fields-style(20px, 16px );
+
+                            option {
+                                font-size: 16px;
+                            }
+                        }
+
+                        &:after {
+                            position: absolute;
+                            content: "";
+                            top: 24px;
+                            right: 20px;
+                            width: 0;
+                            height: 0;
+                            border-left: 6px solid transparent;
+                            border-right: 6px solid transparent;
+                            border-top: 6px solid;
+                            border-color: #97a4a7 transparent transparent transparent;
+                         }
+
                     }
     
-                    select {
-                        @include form-fields-style(20px, 16px )
-                    }
+                    
                 }
             }
     

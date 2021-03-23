@@ -5,6 +5,7 @@ import PlayerDetails from '../PlayerDetails/PlayerDetails'
 import CrossIcon from '../../images/cross-icon.svg'
 import Dictionary from '../../data/dictionary.json'
 import constants, { difficultyLevels, difficultyFactors } from '../../constants'
+import { getFromSessionStorage } from '../../Util';
 
 export default function Game({ name, difficultyLevel, handlePageNavigation }) {
 
@@ -175,6 +176,7 @@ Game.propTypes = {
 }
 
 Game.defaultProps = {
-    name: '',
-    difficultyLevel: 'EASY'
+    name: getFromSessionStorage('name'),
+    difficultyLevel: getFromSessionStorage('level'),
+    handlePageNavigation: (()=>{})
 }
