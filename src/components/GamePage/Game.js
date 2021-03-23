@@ -7,43 +7,45 @@ import Dictionary from '../../data/dictionary.json'
 import constants, { difficultyLevels, difficultyFactors } from '../../constants'
 import { getFromSessionStorage } from '../../Util';
 
+const easyWords = Dictionary.filter(word=> word.length <= 4);
+const mediumWords = Dictionary.filter(word=> word.length >= 5 && word.length <= 8);
+const hardWords = Dictionary.filter(word=> word.length >= 8);
+
 export default function Game({ name, difficultyLevel, handlePageNavigation }) {
 
     const [level, setLevel] = useState(difficultyLevel);
-    const [typedWord, setTypedWord] = useState('')
+    const [typedWord, setTypedWord] = useState('');
     const [wordCount, setWordCount] = useState(1);
     const [gameTime, setGameTime] = useState(0);
     const [gameOver, setGameOver] = useState(false);
+    const [randomWord, setRandomWord] = useState(''); 
+    const [timeLeft, setTimeLeft] = useState(0);
+    const [difficultyFactor, setDifficultyFactor] = useState(difficultyLevels.EASY);
+    const [matchedWordIndex, setMatchedWordIndex] = useState(0);
+    
+    
 
-    const easyWords = Dictionary.filter(word=> word.length <= 4);
-    const mediumWords = Dictionary.filter(word=> word.length >= 5 && word.length <= 8);
-    const hardWords = Dictionary.filter(word=> word.length >= 8);
-    let initialWord = ''
-    let timerValue = 0
-    let initialDifficultyFactor = difficultyFactors.EASY;
-
-    if( level === difficultyLevels.EASY ) {
-         initialWord = easyWords[Math.floor(Math.random() * easyWords.length)];
-         initialDifficultyFactor = difficultyFactors.EASY;
-         timerValue = Math.ceil( initialWord.length / initialDifficultyFactor );
-
-    } else if ( level === difficultyLevels.MEDIUM ) {
-
-         initialWord = mediumWords[Math.floor(Math.random() * mediumWords.length)];
-         initialDifficultyFactor = difficultyFactors.MEDIUM;
-         timerValue = Math.ceil( initialWord.length / initialDifficultyFactor );
-
-    } else if ( level === difficultyLevels.HARD ) {
-
-        initialWord = hardWords[Math.floor(Math.random() * hardWords.length)];
-        initialDifficultyFactor = difficultyFactors.HARD;
-        timerValue = Math.ceil( initialWord.length / initialDifficultyFactor );
-
-    }
-
-    const [randomWord, setRandomWord] = useState(initialWord.toUpperCase()); 
-    const [timeLeft, setTimeLeft] = useState(timerValue);
-    const [difficultyFactor, setDifficultyFactor] = useState(initialDifficultyFactor)
+    useEffect(()=>{
+    
+        if( level === difficultyLevels.EASY ) {
+             setRandomWord(easyWords[Math.floor(Math.random() * easyWords.length)].toUpperCase());
+             setDifficultyFactor(difficultyFactors.EASY);
+             setTimeLeft(Math.ceil( randomWord.length / difficultyFactor ));
+    
+        } else if ( level === difficultyLevels.MEDIUM ) {
+    
+            setRandomWord(mediumWords[Math.floor(Math.random() * mediumWords.length)].toUpperCase());
+            setDifficultyFactor(difficultyFactors.MEDIUM);
+            setTimeLeft(Math.ceil( randomWord.length / difficultyFactor ));
+    
+        } else if ( level === difficultyLevels.HARD ) {
+    
+            setRandomWord(hardWords[Math.floor(Math.random() * hardWords.length)].toUpperCase());
+            setDifficultyFactor(difficultyFactors.HARD);
+            setTimeLeft(Math.ceil( randomWord.length / difficultyFactor ));
+    
+        }
+    },[level, randomWord.length, difficultyFactor])
 
     
 
@@ -66,23 +68,34 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     
     const handleTextChange = (e) => {
         let {target:{value}} = e;
-        let input = value;
-        input.split('').map((letter, index) => {
-            if(randomWord[index] ===  letter) {
-                console.log('Matched');
-            } else {
-                console.log('un - - Matched')
-            }
-            return null;
-        })
-        setTypedWord(e.target.value);
+        const element = document.querySelector(".random-word");
+
+        if (randomWord.substring(0, value.length).match(value)) {
+
+            const matchedLetters = randomWord.substring( 0, value.length );
+            const remainingLetters = randomWord.substring(value.length);
+            element.innerHTML = `<span class="green">${matchedLetters}
+                                 </span>${remainingLetters}`;
+            setMatchedWordIndex(value.length);
+
+        } else {
+
+            const matchedLetters = randomWord.substring(0, matchedWordIndex);
+            const unMatchedLetters = randomWord.substring(matchedWordIndex, value.length);
+            const remainingLetters = randomWord.substring(value.length);
+
+            element.innerHTML = `<span class="green">${matchedLetters}
+                                 </span><span class="blue">${unMatchedLetters}
+                                </span>${remainingLetters}`;
+        }
+        setTypedWord(value);
     }
 
     const toInputUppercase = (e) => {
         e.target.value = ("" + e.target.value).toUpperCase();
       };
 
-    function changeWord(level) {
+    function changeWord() {
         switch(level) {
             case constants.difficultyLevels.EASY :
             {
@@ -112,13 +125,13 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     
     if(typedWord === randomWord) {
         setDifficultyFactor(difficultyFactor + 0.01);
-        if(wordCount === 50) {
+        if(wordCount === 5) {
             level === difficultyLevels.EASY ? setLevel(difficultyLevels.MEDIUM) : setLevel(difficultyLevels.HARD);
-             setWordCount(1);
-            changeWord(level);
+            setWordCount(1);
+            changeWord();
         } else {
             setWordCount(wordCount + 1);
-            changeWord(level);
+            changeWord();
         } 
         setTimeLeft(Math.ceil( randomWord.length / difficultyFactor ));
     }
@@ -132,9 +145,6 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     },[timeLeft, handlePageNavigation, name, level, gameTime])
     
 
-    
-
-   
 
     return (<div className="main">
         
@@ -145,11 +155,14 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
                     <h3>SCORE BOARD</h3>
                 </div>
                 <div className="play-game">
-                    <span>{timeLeft}</span>
-                    <p>{randomWord}</p>
+                    <span className="time-left">{timeLeft.toString()}</span>
+                    <div className="random-word">
+                        {randomWord}
+                    </div>
                     <form>
                         <input 
                             type="text" 
+                            id="input-text"
                             value = {typedWord} 
                             onKeyPress = {(e) => { e.key === 'Enter' && e.preventDefault(); }} 
                             onChange = {handleTextChange}
