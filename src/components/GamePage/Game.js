@@ -125,7 +125,7 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     
     if(typedWord === randomWord) {
         setDifficultyFactor(difficultyFactor + 0.01);
-        if(wordCount === 5) {
+        if(wordCount === 50) {
             level === difficultyLevels.EASY ? setLevel(difficultyLevels.MEDIUM) : setLevel(difficultyLevels.HARD);
             setWordCount(1);
             changeWord();
