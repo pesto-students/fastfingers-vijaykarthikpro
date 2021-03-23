@@ -28,7 +28,7 @@ export default function SignUp({ handlePageNavigation }) {
 
 
     const options = Object.values(difficultyLevels).map((value, id) => {
-        return  <option key={id}>{value}</option>
+        return  <option className="select-option" key={id}>{value}</option>
     })
 
     return (<div className="container">
@@ -43,20 +43,25 @@ export default function SignUp({ handlePageNavigation }) {
                       </div>
                       <form>
                           <input
-                          type="text"
-                          name="name"
-                          placeholder="TYPE YOUR NAME"
-                          value={name}
-                          onChange={(e) => { setName(e.target.value)}}
-                          required
-                          autoFocus/>
+                            type="text"
+                            name="name"
+                            placeholder="TYPE YOUR NAME"
+                            value={name}
+                            onChange={(e) => { setName(e.target.value)}}
+                            required
+                            autoFocus/>
       
-                          <select  
-                            defaultValue={selectLevel} 
-                            onChange={(e) => { setSelectLevel(e.target.value)}} 
-                            required>
-                              {options}
-                          </select>
+                            <div className="select-wrapper">
+                                <select  
+                                    defaultValue={selectLevel} 
+                                    onChange={(e) => { setSelectLevel(e.target.value)}} 
+                                    required
+                                >
+                                    {options}
+                                </select>
+
+                            </div>
+                          
       
                           <button className="start-game-btn" onClick={handleSubmission}>
                               <img src={PlayIconSvg} alt="play icon"/>
