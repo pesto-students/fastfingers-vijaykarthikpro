@@ -1,0 +1,112 @@
+@use '../../library' as library;
+
+.main {
+    color: library.$primary-font-color;
+    background: linear-gradient(to bottom, black, transparent);
+    height: 100vh;
+    position: relative;
+
+    .game-container {
+        display: flex;
+        padding: 40px 20px 20px 20px;
+        justify-content: space-around;
+        flex-grow: 1;
+
+        .score-board {
+            @include library.flex-column-center;
+            justify-content: flex-start;
+            border: library.$primary-font-color solid;
+            border-radius: 10px;
+            width: 250px;
+            
+        }
+
+        .play-game {
+            @include library.flex-column-center;
+            width: 100%;
+            padding: 0px;
+
+            span {
+                font-size: 32px;
+                color: white;
+                margin-right: 120px;
+            }
+
+            p {
+                font-size: 56px;
+                color: white;
+                margin-right: 120px;
+            }
+
+            input[type="text"] {
+                width: 400px;
+                padding: 10px;
+                margin-right: 120px;
+                opacity: 0.59;
+                outline: none;
+                font-size: 32px;
+                border-radius: 15px;
+                box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.8);
+                background-color: white;
+            }
+        }
+
+    }
+
+    .stop-game-btn {
+        display: flex;
+        justify-content: flex-start;
+        position: absolute;
+        padding: 10px;
+        bottom: 0%;
+        left: 0%;
+
+        button {
+            @include library.flex-row-center;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            transform: scale(1);
+            padding: 0px;
+
+            span {
+                font-size: 42px;
+                color: library.$primary-font-color;
+            }
+    
+            &:hover {
+                transform: scale(1.15);
+            }
+    
+            &:active {
+                transform: scale(1);
+            }
+
+        }
+
+        
+    }
+}
+
+@media (max-width: 1370px) {
+
+    .main {
+    
+        .stop-game-btn {
+
+            button {
+
+                img {
+                    width: 60px;
+                }
+    
+                span {
+                    font-size: 32px;
+                }
+            }
+
+        }
+
+    }
+    
+}

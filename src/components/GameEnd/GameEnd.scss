@@ -1,0 +1,130 @@
+@use '../../library' as library;
+
+
+
+.game-end-container {
+    background: linear-gradient(to bottom, black, transparent);
+    height: 100vh;
+    position: relative;
+
+    .center-align {
+        @include library.flex-column-center;
+        color: white;
+        padding-top: 50px;
+
+        .score-text {
+            font-size: 50px;
+            padding: 0;
+            margin: 0;
+        }
+    
+        .score {
+            font-size: 100px;
+            padding: 0;
+            margin: 0;
+        }
+    
+        .new-high-score-text {
+            font-size: 40px;
+            padding: 0;
+            margin: 0;
+        }
+    
+        .play-again-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            outline: none;
+            border: none;
+            background: transparent;
+            color: library.$primary-font-color;
+            font-size: 44px;
+            cursor: pointer;
+            transform: scale(1);
+               
+            img {
+                width: 44px;
+            }
+    
+            p {
+                margin-left: 20px;
+            }
+    
+            &:hover {
+                transform: scale(1.2);
+            }
+    
+            &:active {
+                transform: scale(1);
+            }
+        }
+
+    }
+
+    .quit-btn {
+        display: flex;
+        justify-content: flex-start;
+        position: absolute;
+        padding: 30px;
+        bottom: 0%;
+        left: 0%;
+
+        button {
+            background: transparent;
+            border: none;
+            outline: none;
+            transform: scale(1);
+            color: library.$primary-font-color;
+            font-size: 44px;
+
+            &:hover {
+                transform: scale(1.2);
+            }
+    
+            &:active {
+                transform: scale(1);
+            }
+        }
+        
+    }
+    
+    
+}
+
+
+@media (max-width: 1370px) {
+    .game-end-container {
+
+        .center-align {
+
+            .score-text {
+                font-size: 40px;
+            }
+    
+            .score {
+                font-size: 80px;
+            }
+    
+            .new-high-score-text {
+                font-size: 32px;
+            }
+
+            .play-again-btn {
+                font-size: 32px;
+               
+                img {
+                    width: 30px;
+                }
+            }
+        }
+
+        .quit-btn {
+
+            button {
+                font-size: 32px;
+            }
+        }
+    }
+}
+
+
