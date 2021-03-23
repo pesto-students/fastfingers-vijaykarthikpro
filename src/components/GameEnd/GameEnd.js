@@ -3,7 +3,7 @@ import './GameEnd.scss';
 import PropTypes from 'prop-types';
 import PlayerDetails from '../PlayerDetails/PlayerDetails';
 import PlayAgainIcon from '../../images/play-again-icon.svg';
-import { convertTimeToString } from '../../Util'
+import { convertTimeToString, getFromSessionStorage } from '../../Util'
 
 export default function GameEnd({ name, level, score, handlePageNavigation}) {
 
@@ -38,5 +38,12 @@ GameEnd.propTypes = {
     level: PropTypes.string,
     score: PropTypes.number.isRequired,
     handlePageNavigation: PropTypes.func
+}
+
+GameEnd.defaultProps = {
+    name: getFromSessionStorage('name'),
+    level: getFromSessionStorage('level'),
+    score: 0,
+    handlePageNavigation: (()=>{})
 }
 

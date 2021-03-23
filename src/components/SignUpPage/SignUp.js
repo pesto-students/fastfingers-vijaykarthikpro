@@ -73,3 +73,7 @@ export default function SignUp({ handlePageNavigation }) {
 SignUp.propTypes = {
     handlePageNavigation: PropTypes.func
 }
+
+SignUp.defaultProps = {
+    handlePageNavigation: (()=>{})
+}

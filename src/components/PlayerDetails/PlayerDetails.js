@@ -44,10 +44,13 @@ return (
 PlayerDetails.propTypes = {
     name: PropTypes.string.isRequired,
     level: PropTypes.string.isRequired,
-    score: PropTypes.number
+    score: PropTypes.number,
+    gameOver: PropTypes.bool
 }
 
 PlayerDetails.defaultProps = {
     name: getFromSessionStorage('name'),
-    level: getFromSessionStorage('level')
+    level: getFromSessionStorage('level'),
+    score: 0,
+    gameOver: false
 }
