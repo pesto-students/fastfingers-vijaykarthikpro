@@ -3,7 +3,7 @@ import SignUp from '../SignUpPage/SignUp'
 import Game from '../GamePage/Game'
 import GameEnd from '../GameEnd/GameEnd'
 import { difficultyLevels } from '../../constants';
-// import { saveToSessionStorage ,getFromSessionStorage } from '../../Util'
+
 
 export default function Router() {
     
@@ -13,7 +13,6 @@ export default function Router() {
     const [score, setScore] = useState(0);
 
     let handlePageNavigation = (pathName, name, level, score) =>{
-        console.log('router called path: ',pathName);
         setPath(pathName)
         if(name && level) {
             setName(name);
@@ -25,7 +24,6 @@ export default function Router() {
 
     }
 
-    console.log('path: ',path)
 
     switch(path) {
         case 'SignUp': {

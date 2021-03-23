@@ -9,7 +9,6 @@ import './PlayerDetails.scss';
 export default function PlayerDetails({ name, level, score, gameOver}) {
 
    function displayScore(score) {
-       console.log("displayScore called");
         if( !gameOver ) {
             if( score > 0 ) {
                 return <span>SCORE : {convertSecondsToMMSS(score)}</span>
