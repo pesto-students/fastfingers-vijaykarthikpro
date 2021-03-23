@@ -11,11 +11,12 @@ export default function SignUp({ handlePageNavigation }) {
 
     const [name, setName] = useState(getFromSessionStorage('name') || '');
     const [selectLevel, setSelectLevel] = useState(getFromSessionStorage('level') || difficultyLevels.EASY);
+    const [isDisplayError, setIsDisPlayError] = useState(false);
 
     const handleSubmission = (e) => {
         e.preventDefault()
         if(name === '') {
-            alert('Name field should not be empty.');
+            setIsDisPlayError(true);
         } else {
             saveToSessionStorage('name', name);
             saveToSessionStorage('level', selectLevel);
@@ -25,6 +26,22 @@ export default function SignUp({ handlePageNavigation }) {
             setSelectLevel(difficultyLevels.EASY); 
         }
     }
+
+    const displayErrorMessage = (isDisplay) => {
+        if(isDisplay) {
+            return <p className="error-message">*Name is required.</p>
+        } 
+        return;
+    }
+
+    const handleNameChange = (e) => { 
+        let {target:{value}} = e
+        setName(value);
+        if(value) {
+            setIsDisPlayError(false);
+        }
+    }
+
 
 
     const options = Object.values(difficultyLevels).map((value, id) => {
@@ -47,9 +64,11 @@ export default function SignUp({ handlePageNavigation }) {
                             name="name"
                             placeholder="TYPE YOUR NAME"
                             value={name}
-                            onChange={(e) => { setName(e.target.value)}}
+                            onChange={handleNameChange}
                             required
                             autoFocus/>
+
+                            {displayErrorMessage(isDisplayError)}
       
                             <div className="select-wrapper">
                                 <select  
