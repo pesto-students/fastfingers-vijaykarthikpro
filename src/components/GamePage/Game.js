@@ -3,51 +3,23 @@ import './Game.scss';
 import PropTypes from 'prop-types';
 import PlayerDetails from '../PlayerDetails/PlayerDetails'
 import CrossIcon from '../../images/cross-icon.svg'
-import Dictionary from '../../data/dictionary.json'
-import constants, { difficultyLevels, difficultyFactors } from '../../constants'
-import { getFromSessionStorage } from '../../Util';
-
-const easyWords = Dictionary.filter(word=> word.length <= 4);
-const mediumWords = Dictionary.filter(word=> word.length >= 5 && word.length <= 8);
-const hardWords = Dictionary.filter(word=> word.length >= 8);
+import constants, { difficultyLevels } from '../../constants'
+import { getFromSessionStorage, easyWords, mediumWords, hardWords, getInitialValues } from '../../Util';
 
 export default function Game({ name, difficultyLevel, handlePageNavigation }) {
 
     const [level, setLevel] = useState(difficultyLevel);
     const [typedWord, setTypedWord] = useState('');
-    const [wordCount, setWordCount] = useState(1);
     const [gameTime, setGameTime] = useState(0);
     const [gameOver, setGameOver] = useState(false);
-    const [randomWord, setRandomWord] = useState(''); 
-    const [timeLeft, setTimeLeft] = useState(0);
-    const [difficultyFactor, setDifficultyFactor] = useState(difficultyLevels.EASY);
+    const [wordCount, setWordCount] = useState(1);
     const [matchedWordIndex, setMatchedWordIndex] = useState(0);
-    
-    
 
-    useEffect(()=>{
-    
-        if( level === difficultyLevels.EASY ) {
-             setRandomWord(easyWords[Math.floor(Math.random() * easyWords.length)].toUpperCase());
-             setDifficultyFactor(difficultyFactors.EASY);
-             setTimeLeft(Math.ceil( randomWord.length / difficultyFactor ));
-    
-        } else if ( level === difficultyLevels.MEDIUM ) {
-    
-            setRandomWord(mediumWords[Math.floor(Math.random() * mediumWords.length)].toUpperCase());
-            setDifficultyFactor(difficultyFactors.MEDIUM);
-            setTimeLeft(Math.ceil( randomWord.length / difficultyFactor ));
-    
-        } else if ( level === difficultyLevels.HARD ) {
-    
-            setRandomWord(hardWords[Math.floor(Math.random() * hardWords.length)].toUpperCase());
-            setDifficultyFactor(difficultyFactors.HARD);
-            setTimeLeft(Math.ceil( randomWord.length / difficultyFactor ));
-    
-        }
-    },[level, randomWord.length, difficultyFactor])
+    const {initialDifficultyFactor, initialRandomWord, initialTimerValue} = getInitialValues(level);
 
-    
+    const [difficultyFactor, setDifficultyFactor] = useState(initialDifficultyFactor);
+    const [timeLeft, setTimeLeft] = useState(initialTimerValue);
+    const [randomWord, setRandomWord] = useState(initialRandomWord); 
 
     useEffect(()=>{
         let timer = timeLeft > 0 && setInterval(() => setTimeLeft(timeLeft - 1), 1000);
@@ -93,7 +65,7 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
 
     const toInputUppercase = (e) => {
         e.target.value = ("" + e.target.value).toUpperCase();
-      };
+    }
 
     function changeWord() {
         switch(level) {
@@ -125,6 +97,7 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     
     if(typedWord === randomWord) {
         setDifficultyFactor(difficultyFactor + 0.01);
+
         if(wordCount === 50) {
             level === difficultyLevels.EASY ? setLevel(difficultyLevels.MEDIUM) : setLevel(difficultyLevels.HARD);
             setWordCount(1);
@@ -133,6 +106,7 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
             setWordCount(wordCount + 1);
             changeWord();
         } 
+        
         setTimeLeft(Math.ceil( randomWord.length / difficultyFactor ));
     }
 
@@ -140,6 +114,7 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     useEffect(() =>{
         if(timeLeft === 0) {
             setGameOver(true);
+            console.log("level: ",level);
             return handlePageNavigation('GameEnd',name, level, gameTime)
         }
     },[timeLeft, handlePageNavigation, name, level, gameTime])

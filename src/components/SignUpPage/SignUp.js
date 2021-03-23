@@ -20,10 +20,7 @@ export default function SignUp({ handlePageNavigation }) {
         } else {
             saveToSessionStorage('name', name);
             saveToSessionStorage('level', selectLevel);
-            handlePageNavigation('Game',name, selectLevel);
-
-            setName('');
-            setSelectLevel(difficultyLevels.EASY); 
+            handlePageNavigation('Game',name, selectLevel); 
         }
     }
 
