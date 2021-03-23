@@ -1,76 +1,106 @@
 import React,{ useState, useEffect }  from 'react';
 import './Game.scss';
-import PersonIcon from '../../images/person-icon.svg';
-import GamepadIcon from '../../images/gamepad-icon.svg';
+import PropTypes from 'prop-types';
+import PlayerDetails from '../PlayerDetails/PlayerDetails'
 import CrossIcon from '../../images/cross-icon.svg'
-import { getFromSessionStorage } from '../../Util'
 import Dictionary from '../../data/dictionary.json'
 import constants, { difficultyLevels, difficultyFactors } from '../../constants'
 
-export default function Game() {
+export default function Game({ name, difficultyLevel, handlePageNavigation }) {
 
-    const name = getFromSessionStorage('name');
-    const [level, setLevel] = useState(getFromSessionStorage('level'));
+    const [level, setLevel] = useState(difficultyLevel);
     const [typedWord, setTypedWord] = useState('')
     const [wordCount, setWordCount] = useState(1);
-    // const [difficultyFactor, setDifficultyFactor] = useState(difficultyFactors.EASY)
-    
+    const [gameTime, setGameTime] = useState(0);
+    const [gameOver, setGameOver] = useState(false);
 
     const easyWords = Dictionary.filter(word=> word.length <= 4);
     const mediumWords = Dictionary.filter(word=> word.length >= 5 && word.length <= 8);
     const hardWords = Dictionary.filter(word=> word.length >= 8);
     let initialWord = ''
     let timerValue = 0
-    let difficultyFactor = 1;
+    let initialDifficultyFactor = difficultyFactors.EASY;
 
     if( level === difficultyLevels.EASY ) {
-
          initialWord = easyWords[Math.floor(Math.random() * easyWords.length)];
-         difficultyFactor = difficultyFactors.EASY
-         timerValue = Math.ceil( initialWord.length / 1 );
+         initialDifficultyFactor = difficultyFactors.EASY;
+         timerValue = Math.ceil( initialWord.length / initialDifficultyFactor );
 
     } else if ( level === difficultyLevels.MEDIUM ) {
 
          initialWord = mediumWords[Math.floor(Math.random() * mediumWords.length)];
-         difficultyFactor = difficultyFactors.MEDIUM
-         timerValue = Math.ceil( initialWord.length / 1.5 );
+         initialDifficultyFactor = difficultyFactors.MEDIUM;
+         timerValue = Math.ceil( initialWord.length / initialDifficultyFactor );
 
     } else if ( level === difficultyLevels.HARD ) {
 
         initialWord = hardWords[Math.floor(Math.random() * hardWords.length)];
-        difficultyFactor = difficultyFactors.HARD
-        timerValue = Math.ceil( initialWord.length / 2 );
+        initialDifficultyFactor = difficultyFactors.HARD;
+        timerValue = Math.ceil( initialWord.length / initialDifficultyFactor );
 
     }
 
-    const [randomWord, setRandomWord] = useState(initialWord); 
+    const [randomWord, setRandomWord] = useState(initialWord.toUpperCase()); 
     const [timeLeft, setTimeLeft] = useState(timerValue);
+    const [difficultyFactor, setDifficultyFactor] = useState(initialDifficultyFactor)
+
+    
 
     useEffect(()=>{
         let timer = timeLeft > 0 && setInterval(() => setTimeLeft(timeLeft - 1), 1000);
-        if(timer < 2) timer = 2;
         return () => clearInterval(timer);
     },[timeLeft]);
+
+
+
+    useEffect(()=>{
+        if(!gameOver) {
+            let gameTimeTimer = gameTime >= 0 &&  setInterval( () => setGameTime(gameTime + 1), 1000);
+            return() => clearInterval(gameTimeTimer);
+        } else {
+            setGameTime(0);
+        }
+    },[gameTime, gameOver]);
+    
     
     const handleTextChange = (e) => {
+        let {target:{value}} = e;
+        let input = value;
+        input.split('').map((letter, index) => {
+            if(randomWord[index] ===  letter) {
+                console.log('Matched');
+            } else {
+                console.log('un - - Matched')
+            }
+            return null;
+        })
         setTypedWord(e.target.value);
     }
+
+    const toInputUppercase = (e) => {
+        e.target.value = ("" + e.target.value).toUpperCase();
+      };
 
     function changeWord(level) {
         switch(level) {
             case constants.difficultyLevels.EASY :
             {
-                setRandomWord(easyWords[Math.floor(Math.random() * easyWords.length)]);
+                let word = easyWords[Math.floor(Math.random() * easyWords.length)]
+                setRandomWord(word.toUpperCase());
                 setTypedWord('');
                 break;
             }
             case constants.difficultyLevels.MEDIUM : {
-                setRandomWord(mediumWords[Math.floor(Math.random() * mediumWords.length)]);
+
+                let word = mediumWords[Math.floor(Math.random() * mediumWords.length)]
+                setRandomWord(word.toUpperCase());
                 setTypedWord('');
                 break;
             }
             case constants.difficultyLevels.HARD : {
-                setRandomWord(hardWords[Math.floor(Math.random() * hardWords.length)]);
+
+                let word = hardWords[Math.floor(Math.random() * hardWords.length)]
+                setRandomWord(word.toUpperCase());
                 setTypedWord('');
                 break;
             }
@@ -78,38 +108,36 @@ export default function Game() {
         }
     }
 
+    
     if(typedWord === randomWord) {
-        difficultyFactor += 0.01
+        setDifficultyFactor(difficultyFactor + 0.01);
         if(wordCount === 50) {
             level === difficultyLevels.EASY ? setLevel(difficultyLevels.MEDIUM) : setLevel(difficultyLevels.HARD);
-            setWordCount(1); 
+             setWordCount(1);
             changeWord(level);
         } else {
             setWordCount(wordCount + 1);
             changeWord(level);
-        }
-        timerValue = Math.ceil( randomWord.length / difficultyFactor );
-        setTimeLeft(timerValue)  
+        } 
+        setTimeLeft(Math.ceil( randomWord.length / difficultyFactor ));
     }
 
+ 
+    useEffect(() =>{
+        if(timeLeft === 0) {
+            setGameOver(true);
+            return handlePageNavigation('GameEnd',name, level, gameTime)
+        }
+    },[timeLeft, handlePageNavigation, name, level, gameTime])
+    
+
+    
+
+   
 
     return (<div className="main">
-            <div className="header-container">
-                <div className="player-name-title">
-                    <div className="player-name">
-                        <img src={PersonIcon}  alt=""/>
-                        <span>Player: {name}</span>
-                    </div>
-                    <span className="title">fast fingers</span>
-                </div>
-                <div className="level-score">
-                    <div className="level">
-                        <img src={GamepadIcon} alt=""/>
-                        <span>LEVEL : {level}</span>
-                    </div>
-                    <span>SCORE</span>
-                </div>
-            </div>
+        
+            <PlayerDetails name={name} level={level} score={gameTime} gameOver={gameOver}/>
 
             <div className="game-container">
                 <div className="score-board">
@@ -124,13 +152,29 @@ export default function Game() {
                             value = {typedWord} 
                             onKeyPress = {(e) => { e.key === 'Enter' && e.preventDefault(); }} 
                             onChange = {handleTextChange}
+                            onInput={toInputUppercase}
                             autoFocus />
                     </form>
                 </div>        
             </div>
-            <button className="stop-game-btn">
-                <img src={CrossIcon} alt=""/>
-                <span>STOP GAME</span>
-            </button>  
+            <div className="stop-game-btn">
+                <button>
+                    <img src={CrossIcon} alt=""/>
+                    <span>STOP GAME</span>
+                </button>
+               
+            </div>  
         </div>)
+}
+
+
+Game.propTypes = {
+    name: PropTypes.string,
+    difficultyLevel: PropTypes.string,
+    handlePageNavigation: PropTypes.func
+}
+
+Game.defaultProps = {
+    name: '',
+    difficultyLevel: 'EASY'
 }

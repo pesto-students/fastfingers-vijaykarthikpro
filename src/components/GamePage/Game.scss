@@ -4,27 +4,7 @@
     color: library.$primary-font-color;
     background: linear-gradient(to bottom, black, transparent);
     height: 100vh;
-
-    .header-container {
-        display: block;
-        padding: 20px;
-        line-height: 1.4;
-        font-size: 44px;
-
-        .player-name-title {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .level-score {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        img {
-            margin: 0 10px 0 0;
-        }
-    }
+    position: relative;
 
     .game-container {
         display: flex;
@@ -74,49 +54,57 @@
     }
 
     .stop-game-btn {
-        @include library.flex-row-center;
-        border: none;
-        outline: none;
-        background-color: transparent;
-        transform: scale(1);
-        padding: 0px;
+        display: flex;
+        justify-content: flex-start;
+        position: absolute;
+        padding: 10px;
+        bottom: 0%;
+        left: 0%;
 
-        span {
-            font-size: 42px;
-            color: library.$primary-font-color;
-        }
-
-        &:hover {
-            transform: scale(1.15);
-        }
-
-        &:active {
+        button {
+            @include library.flex-row-center;
+            border: none;
+            outline: none;
+            background-color: transparent;
             transform: scale(1);
+            padding: 0px;
+
+            span {
+                font-size: 42px;
+                color: library.$primary-font-color;
+            }
+    
+            &:hover {
+                transform: scale(1.15);
+            }
+    
+            &:active {
+                transform: scale(1);
+            }
+
         }
+
+        
     }
 }
 
 @media (max-width: 1370px) {
 
     .main {
-
-        .header-container {
-            font-size: 32px;
-
-            img {
-                width: 30px;
-            }
-        }
     
         .stop-game-btn {
 
-            img {
-                width: 60px;
+            button {
+
+                img {
+                    width: 60px;
+                }
+    
+                span {
+                    font-size: 32px;
+                }
             }
 
-            span {
-                font-size: 32px;
-            }
         }
 
     }

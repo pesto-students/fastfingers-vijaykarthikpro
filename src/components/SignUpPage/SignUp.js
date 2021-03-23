@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
-import './SignUp.scss'
-import KeyboardSvg from '../../images/keyboard-icon.svg'
-import PlayIconSvg from '../../images/play-icon.svg'
-import { difficultyLevels, defaultTexts } from '../../constants'
-import { saveToSessionStorage } from '../../Util'
+import './SignUp.scss';
+import PropTypes from 'prop-types';
+import KeyboardSvg from '../../images/keyboard-icon.svg';
+import PlayIconSvg from '../../images/play-icon.svg';
+import { difficultyLevels } from '../../constants';
+import {  getFromSessionStorage, saveToSessionStorage } from '../../Util';
 
 export default function SignUp({ handlePageNavigation }) {
 
-    const [name, setName] = useState('');
-    const [selectLevel, setSelectLevel] = useState(difficultyLevels.EASY)
+
+    const [name, setName] = useState(getFromSessionStorage('name') || '');
+    const [selectLevel, setSelectLevel] = useState(getFromSessionStorage('level') || difficultyLevels.EASY);
 
     const handleSubmission = (e) => {
         e.preventDefault()
@@ -17,7 +19,7 @@ export default function SignUp({ handlePageNavigation }) {
         } else {
             saveToSessionStorage('name', name);
             saveToSessionStorage('level', selectLevel);
-            handlePageNavigation('Game',true);
+            handlePageNavigation('Game',name, selectLevel);
 
             setName('');
             setSelectLevel(difficultyLevels.EASY); 
@@ -25,8 +27,8 @@ export default function SignUp({ handlePageNavigation }) {
     }
 
 
-    const options = Object.values(difficultyLevels).map((value, index) => {
-        return  <option key={index}>{value}</option>
+    const options = Object.values(difficultyLevels).map((value, id) => {
+        return  <option key={id}>{value}</option>
     })
 
     return (<div className="container">
@@ -43,13 +45,14 @@ export default function SignUp({ handlePageNavigation }) {
                           <input
                           type="text"
                           name="name"
-                          placeholder={ defaultTexts.TYPE_YOUR_NAME }
+                          placeholder="TYPE YOUR NAME"
                           value={name}
                           onChange={(e) => { setName(e.target.value)}}
-                          required/>
+                          required
+                          autoFocus/>
       
                           <select  
-                            defaultValue={difficultyLevels.EASY} 
+                            defaultValue={selectLevel} 
                             onChange={(e) => { setSelectLevel(e.target.value)}} 
                             required>
                               {options}
@@ -57,7 +60,7 @@ export default function SignUp({ handlePageNavigation }) {
       
                           <button className="start-game-btn" onClick={handleSubmission}>
                               <img src={PlayIconSvg} alt="play icon"/>
-                              <span>{defaultTexts.START_GAME}</span>
+                              <span>START GAME</span>
                           </button>
                       </form>
                   </div>
@@ -65,4 +68,8 @@ export default function SignUp({ handlePageNavigation }) {
                   
         </div>)
 
+}
+
+SignUp.propTypes = {
+    handlePageNavigation: PropTypes.func
 }
