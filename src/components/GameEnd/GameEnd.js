@@ -5,18 +5,19 @@ import PlayerDetails from '../PlayerDetails/PlayerDetails';
 import PlayAgainIcon from '../../images/play-again-icon.svg';
 import { convertTimeToString, getFromSessionStorage } from '../../Util'
 
-export default function GameEnd({ name, level, score, handlePageNavigation}) {
+export default function GameEnd({ name, difficultyLevel, score, handlePageNavigation}) {
 
     const navigatePageToSignUp = (e) => {
         handlePageNavigation('SignUp');
     }
 
     const navigatePageToGame = (e) => {
-        handlePageNavigation('Game');
+        let level = getFromSessionStorage('level');
+        handlePageNavigation('Game',name, level);
     }
 
     return (<div className="game-end-container">
-        <PlayerDetails name={name} level={level} score={score} gameOver={true}/>
+        <PlayerDetails name={name} level={difficultyLevel} score={score} gameOver={true}/>
         <div className='center-align'>
             <span className="score-text">SCORE : GAME 5</span>
             <span className="score">{convertTimeToString(score)}</span>

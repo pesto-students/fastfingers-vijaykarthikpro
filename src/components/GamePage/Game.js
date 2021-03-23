@@ -3,49 +3,23 @@ import './Game.scss';
 import PropTypes from 'prop-types';
 import PlayerDetails from '../PlayerDetails/PlayerDetails'
 import CrossIcon from '../../images/cross-icon.svg'
-import Dictionary from '../../data/dictionary.json'
-import constants, { difficultyLevels, difficultyFactors } from '../../constants'
-import { getFromSessionStorage } from '../../Util';
+import constants, { difficultyLevels } from '../../constants'
+import { getFromSessionStorage, easyWords, mediumWords, hardWords, getInitialValues } from '../../Util';
 
 export default function Game({ name, difficultyLevel, handlePageNavigation }) {
 
     const [level, setLevel] = useState(difficultyLevel);
-    const [typedWord, setTypedWord] = useState('')
-    const [wordCount, setWordCount] = useState(1);
+    const [typedWord, setTypedWord] = useState('');
     const [gameTime, setGameTime] = useState(0);
     const [gameOver, setGameOver] = useState(false);
+    const [wordCount, setWordCount] = useState(1);
+    const [matchedWordIndex, setMatchedWordIndex] = useState(0);
 
-    const easyWords = Dictionary.filter(word=> word.length <= 4);
-    const mediumWords = Dictionary.filter(word=> word.length >= 5 && word.length <= 8);
-    const hardWords = Dictionary.filter(word=> word.length >= 8);
-    let initialWord = ''
-    let timerValue = 0
-    let initialDifficultyFactor = difficultyFactors.EASY;
+    const {initialDifficultyFactor, initialRandomWord, initialTimerValue} = getInitialValues(level);
 
-    if( level === difficultyLevels.EASY ) {
-         initialWord = easyWords[Math.floor(Math.random() * easyWords.length)];
-         initialDifficultyFactor = difficultyFactors.EASY;
-         timerValue = Math.ceil( initialWord.length / initialDifficultyFactor );
-
-    } else if ( level === difficultyLevels.MEDIUM ) {
-
-         initialWord = mediumWords[Math.floor(Math.random() * mediumWords.length)];
-         initialDifficultyFactor = difficultyFactors.MEDIUM;
-         timerValue = Math.ceil( initialWord.length / initialDifficultyFactor );
-
-    } else if ( level === difficultyLevels.HARD ) {
-
-        initialWord = hardWords[Math.floor(Math.random() * hardWords.length)];
-        initialDifficultyFactor = difficultyFactors.HARD;
-        timerValue = Math.ceil( initialWord.length / initialDifficultyFactor );
-
-    }
-
-    const [randomWord, setRandomWord] = useState(initialWord.toUpperCase()); 
-    const [timeLeft, setTimeLeft] = useState(timerValue);
-    const [difficultyFactor, setDifficultyFactor] = useState(initialDifficultyFactor)
-
-    
+    const [difficultyFactor, setDifficultyFactor] = useState(initialDifficultyFactor);
+    const [timeLeft, setTimeLeft] = useState(initialTimerValue);
+    const [randomWord, setRandomWord] = useState(initialRandomWord); 
 
     useEffect(()=>{
         let timer = timeLeft > 0 && setInterval(() => setTimeLeft(timeLeft - 1), 1000);
@@ -66,23 +40,34 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     
     const handleTextChange = (e) => {
         let {target:{value}} = e;
-        let input = value;
-        input.split('').map((letter, index) => {
-            if(randomWord[index] ===  letter) {
-                console.log('Matched');
-            } else {
-                console.log('un - - Matched')
-            }
-            return null;
-        })
-        setTypedWord(e.target.value);
+        const element = document.querySelector(".random-word");
+
+        if (randomWord.substring(0, value.length).match(value)) {
+
+            const matchedLetters = randomWord.substring( 0, value.length );
+            const remainingLetters = randomWord.substring(value.length);
+            element.innerHTML = `<span class="green">${matchedLetters}
+                                 </span>${remainingLetters}`;
+            setMatchedWordIndex(value.length);
+
+        } else {
+
+            const matchedLetters = randomWord.substring(0, matchedWordIndex);
+            const unMatchedLetters = randomWord.substring(matchedWordIndex, value.length);
+            const remainingLetters = randomWord.substring(value.length);
+
+            element.innerHTML = `<span class="green">${matchedLetters}
+                                 </span><span class="blue">${unMatchedLetters}
+                                </span>${remainingLetters}`;
+        }
+        setTypedWord(value);
     }
 
     const toInputUppercase = (e) => {
         e.target.value = ("" + e.target.value).toUpperCase();
-      };
+    }
 
-    function changeWord(level) {
+    function changeWord() {
         switch(level) {
             case constants.difficultyLevels.EASY :
             {
@@ -112,14 +97,16 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     
     if(typedWord === randomWord) {
         setDifficultyFactor(difficultyFactor + 0.01);
+
         if(wordCount === 50) {
             level === difficultyLevels.EASY ? setLevel(difficultyLevels.MEDIUM) : setLevel(difficultyLevels.HARD);
-             setWordCount(1);
-            changeWord(level);
+            setWordCount(1);
+            changeWord();
         } else {
             setWordCount(wordCount + 1);
-            changeWord(level);
+            changeWord();
         } 
+        
         setTimeLeft(Math.ceil( randomWord.length / difficultyFactor ));
     }
 
@@ -127,14 +114,12 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     useEffect(() =>{
         if(timeLeft === 0) {
             setGameOver(true);
+            console.log("level: ",level);
             return handlePageNavigation('GameEnd',name, level, gameTime)
         }
     },[timeLeft, handlePageNavigation, name, level, gameTime])
     
 
-    
-
-   
 
     return (<div className="main">
         
@@ -145,11 +130,14 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
                     <h3>SCORE BOARD</h3>
                 </div>
                 <div className="play-game">
-                    <span>{timeLeft}</span>
-                    <p>{randomWord}</p>
+                    <span className="time-left">{timeLeft.toString()}</span>
+                    <div className="random-word">
+                        {randomWord}
+                    </div>
                     <form>
                         <input 
                             type="text" 
+                            id="input-text"
                             value = {typedWord} 
                             onKeyPress = {(e) => { e.key === 'Enter' && e.preventDefault(); }} 
                             onChange = {handleTextChange}
