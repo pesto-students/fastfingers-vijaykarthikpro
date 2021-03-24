@@ -3,15 +3,17 @@ import './GameEnd.scss';
 import PropTypes from 'prop-types';
 import PlayerDetails from '../PlayerDetails/PlayerDetails';
 import PlayAgainIcon from '../../images/play-again-icon.svg';
-import { convertTimeToString, getFromSessionStorage } from '../../Util'
+import { convertTimeToString, getFromSessionStorage, removeFromSessionStorage } from '../../Util'
 
 export default function GameEnd({ name, difficultyLevel, score, handlePageNavigation}) {
 
-    const navigatePageToSignUp = (e) => {
+
+    const navigatePageToSignUp = () => {
+        removeFromSessionStorage('totalGames');
         handlePageNavigation('SignUp');
     }
 
-    const navigatePageToGame = (e) => {
+    const navigatePageToGame = () => {
         let level = getFromSessionStorage('level');
         handlePageNavigation('Game',name, level);
     }

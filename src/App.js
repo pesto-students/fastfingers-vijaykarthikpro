@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Router from './components/Router/Router'
 import FastFingersCoverImage from './images/FastFingersCoverImage.svg'
-// import Router from './Router'
+
 
 function App() {
 
