@@ -117,7 +117,6 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     useEffect(() =>{
         if(timeLeft === 0) {
             setGameOver(true);
-            // let currentGame = { Game : (Object.values(totalGames).length + 1).toString(), value: gameTime}
             setTotalGames(totalGames.push(gameTime));
             saveToSessionStorage('totalGames',totalGames);
 
