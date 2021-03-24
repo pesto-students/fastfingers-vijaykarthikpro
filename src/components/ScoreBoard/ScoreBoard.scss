@@ -1,0 +1,55 @@
+@use '../../library' as library;
+
+.score-board {
+    border: library.$primary-font-color solid;
+    border-radius: 10px;
+    width: 300px;
+    padding: 10px;
+
+    .title {
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .games-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        list-style-type: none;
+        color: white;
+        padding: 10px;
+
+        li {
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+    }
+
+    .personal-best {
+        display: flex;
+        font-size: 20px;
+        color: library.$primary-font-color;
+    }
+}
+
+@media (max-width: 1370px) {
+    .score-board {
+        width: 250px;
+
+        .title {
+            font-size: 20px;
+        }
+
+        .games-list {
+
+            li {
+                font-size: 20px;
+            }
+        }
+
+        .personal-best {
+            font-size: 10px;
+        }
+    }
+}

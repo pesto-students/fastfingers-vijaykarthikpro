@@ -4,16 +4,19 @@ import PropTypes from 'prop-types';
 import PlayerDetails from '../PlayerDetails/PlayerDetails'
 import CrossIcon from '../../images/cross-icon.svg'
 import constants, { difficultyLevels } from '../../constants'
-import { getFromSessionStorage, easyWords, mediumWords, hardWords, getInitialValues } from '../../Util';
+import { saveToSessionStorage, getFromSessionStorage, easyWords, mediumWords, hardWords, getInitialValues } from '../../Util';
+import ScoreBoard from '../ScoreBoard/ScoreBoard'
+
 
 export default function Game({ name, difficultyLevel, handlePageNavigation }) {
 
     const [level, setLevel] = useState(difficultyLevel);
-    const [typedWord, setTypedWord] = useState('');
+    const [inputWord, setInputWord] = useState('');
     const [gameTime, setGameTime] = useState(0);
     const [gameOver, setGameOver] = useState(false);
     const [wordCount, setWordCount] = useState(1);
     const [matchedWordIndex, setMatchedWordIndex] = useState(0);
+    const [totalGames, setTotalGames] = useState(getFromSessionStorage('totalGames') || []);
 
     const {initialDifficultyFactor, initialRandomWord, initialTimerValue} = getInitialValues(level);
 
@@ -60,7 +63,7 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
                                  </span><span class="blue">${unMatchedLetters}
                                 </span>${remainingLetters}`;
         }
-        setTypedWord(value);
+        setInputWord(value);
     }
 
     const toInputUppercase = (e) => {
@@ -73,21 +76,21 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
             {
                 let word = easyWords[Math.floor(Math.random() * easyWords.length)]
                 setRandomWord(word.toUpperCase());
-                setTypedWord('');
+                setInputWord('');
                 break;
             }
             case constants.difficultyLevels.MEDIUM : {
 
                 let word = mediumWords[Math.floor(Math.random() * mediumWords.length)]
                 setRandomWord(word.toUpperCase());
-                setTypedWord('');
+                setInputWord('');
                 break;
             }
             case constants.difficultyLevels.HARD : {
 
                 let word = hardWords[Math.floor(Math.random() * hardWords.length)]
                 setRandomWord(word.toUpperCase());
-                setTypedWord('');
+                setInputWord('');
                 break;
             }
             default: break;
@@ -95,7 +98,7 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     }
 
     
-    if(typedWord === randomWord) {
+    if(inputWord === randomWord) {
         setDifficultyFactor(difficultyFactor + 0.01);
 
         if(wordCount === 50) {
@@ -114,10 +117,13 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     useEffect(() =>{
         if(timeLeft === 0) {
             setGameOver(true);
-            console.log("level: ",level);
+            // let currentGame = { Game : (Object.values(totalGames).length + 1).toString(), value: gameTime}
+            setTotalGames(totalGames.push(gameTime));
+            saveToSessionStorage('totalGames',totalGames);
+
             return handlePageNavigation('GameEnd', name, level, gameTime)
         }
-    },[timeLeft, handlePageNavigation, name, level, gameTime])
+    },[timeLeft, handlePageNavigation, name, level, gameTime, totalGames])
 
     const handleStopGame = (e) =>{
         e.preventDefault();
@@ -131,9 +137,7 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
             <PlayerDetails name={name} level={level} score={gameTime} gameOver={gameOver}/>
 
             <div className="game-container">
-                <div className="score-board">
-                    <h3>SCORE BOARD</h3>
-                </div>
+                <ScoreBoard />
                 <div className="play-game">
                     <span className="time-left">{timeLeft.toString()}</span>
                     <div className="random-word">
@@ -143,7 +147,7 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
                         <input 
                             type="text" 
                             id="input-text"
-                            value = {typedWord} 
+                            value = {inputWord} 
                             onKeyPress = {(e) => { e.key === 'Enter' && e.preventDefault(); }} 
                             onChange = {handleTextChange}
                             onInput={toInputUppercase}

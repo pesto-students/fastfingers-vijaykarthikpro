@@ -9,6 +9,10 @@ export const getFromSessionStorage = (key) => {
     return key && JSON.parse(sessionStorage.getItem(key));
 }
 
+export const removeFromSessionStorage = (key) => {
+    return sessionStorage.removeItem(key);
+}
+
 export function convertSecondsToMMSS(seconds) {
     return new Date(seconds * 1000).toISOString().substr(14, 5);
  }
