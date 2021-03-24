@@ -4,6 +4,9 @@
     border: library.$primary-font-color solid;
     border-radius: 10px;
     width: 300px;
+    display: flex;
+    flex-flow: column;
+    height: 55vh;
     padding: 10px;
 
     .title {
@@ -35,7 +38,7 @@
 
 @media (max-width: 1370px) {
     .score-board {
-        width: 250px;
+        width: 200px;
 
         .title {
             font-size: 20px;
