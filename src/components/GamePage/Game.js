@@ -1,4 +1,4 @@
-import React,{ useState, useEffect }  from 'react';
+import React,{ useState, useEffect, useCallback }  from 'react';
 import './Game.scss';
 import PropTypes from 'prop-types';
 import PlayerDetails from '../PlayerDetails/PlayerDetails'
@@ -18,7 +18,7 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     const [matchedWordIndex, setMatchedWordIndex] = useState(0);
     const [totalGames, setTotalGames] = useState(getFromSessionStorage('totalGames') || []);
 
-    const {initialDifficultyFactor, initialRandomWord, initialTimerValue} = getInitialValues(level);
+    const {initialDifficultyFactor, initialRandomWord, initialTimerValue} = useCallback(getInitialValues(level));
 
     const [difficultyFactor, setDifficultyFactor] = useState(initialDifficultyFactor);
     const [timeLeft, setTimeLeft] = useState(initialTimerValue);
@@ -124,8 +124,7 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
         }
     },[timeLeft, handlePageNavigation, name, level, gameTime, totalGames])
 
-    const handleStopGame = (e) =>{
-        e.preventDefault();
+    const handleStopGame = () =>{
         handlePageNavigation('GameEnd', name, level, gameTime);
     }
     

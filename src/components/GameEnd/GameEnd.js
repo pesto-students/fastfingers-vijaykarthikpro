@@ -8,12 +8,12 @@ import { convertTimeToString, getFromSessionStorage, removeFromSessionStorage } 
 export default function GameEnd({ name, difficultyLevel, score, handlePageNavigation}) {
 
 
-    const navigatePageToSignUp = (e) => {
+    const navigatePageToSignUp = () => {
         removeFromSessionStorage('totalGames');
         handlePageNavigation('SignUp');
     }
 
-    const navigatePageToGame = (e) => {
+    const navigatePageToGame = () => {
         let level = getFromSessionStorage('level');
         handlePageNavigation('Game',name, level);
     }

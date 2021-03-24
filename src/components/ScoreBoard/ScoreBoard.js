@@ -1,4 +1,4 @@
-import React, {/*  useEffect, useState */ } from 'react';
+import React from 'react';
 import { convertTimeToString, getFromSessionStorage } from '../../Util';
 import './ScoreBoard.scss'
 
@@ -6,7 +6,7 @@ export default function ScoreBoard() {
 
     const gamesList = getFromSessionStorage('totalGames') || [];
 
-    const displayGamesList = (gamesList) =>{
+    const displayGamesList = () =>{
         if(gamesList.length > 0) {
             const allGamesList =  gamesList.map((gameTime, id) => {
                 if(gameTime === Math.max(...gamesList)) {
@@ -26,11 +26,10 @@ export default function ScoreBoard() {
         } else {
             return 
         }
-        
     }
 
     return (<div className="score-board">
             <span className="title">SCORE BOARD</span>
-            {displayGamesList(gamesList)}
+            {displayGamesList()}
     </div>)
 }
