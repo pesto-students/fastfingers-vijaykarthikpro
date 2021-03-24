@@ -115,9 +115,14 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
         if(timeLeft === 0) {
             setGameOver(true);
             console.log("level: ",level);
-            return handlePageNavigation('GameEnd',name, level, gameTime)
+            return handlePageNavigation('GameEnd', name, level, gameTime)
         }
     },[timeLeft, handlePageNavigation, name, level, gameTime])
+
+    const handleStopGame = (e) =>{
+        e.preventDefault();
+        handlePageNavigation('GameEnd', name, level, gameTime);
+    }
     
 
 
@@ -147,7 +152,7 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
                 </div>        
             </div>
             <div className="stop-game-btn">
-                <button>
+                <button onClick={handleStopGame}>
                     <img src={CrossIcon} alt=""/>
                     <span>STOP GAME</span>
                 </button>
