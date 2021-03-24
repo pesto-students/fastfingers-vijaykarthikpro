@@ -7,6 +7,7 @@ import { convertTimeToString, getFromSessionStorage, removeFromSessionStorage } 
 
 export default function GameEnd({ name, difficultyLevel, score, handlePageNavigation}) {
 
+    const totalGames = getFromSessionStorage('totalGames');
 
     const navigatePageToSignUp = () => {
         removeFromSessionStorage('totalGames');
@@ -21,7 +22,7 @@ export default function GameEnd({ name, difficultyLevel, score, handlePageNaviga
     return (<div className="game-end-container">
         <PlayerDetails name={name} level={difficultyLevel} score={score} gameOver={true}/>
         <div className='center-align'>
-            <span className="score-text">SCORE : GAME 5</span>
+            <span className="score-text">SCORE : GAME {totalGames.length}</span>
             <span className="score">{convertTimeToString(score)}</span>
             <span className="new-high-score-text">New High Score</span>
 

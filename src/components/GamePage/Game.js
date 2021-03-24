@@ -127,6 +127,8 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
    
 
     const handleStopGame = () =>{
+        setTotalGames(totalGames.push(gameTime));
+        saveToSessionStorage('totalGames',totalGames);
         handlePageNavigation('GameEnd', name, level, gameTime);
     }
     
