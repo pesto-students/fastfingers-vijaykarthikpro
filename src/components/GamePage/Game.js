@@ -6,7 +6,7 @@ import CrossIcon from '../../images/cross-icon.svg'
 import constants, { difficultyLevels } from '../../constants'
 import { saveToSessionStorage, getFromSessionStorage, easyWords, mediumWords, hardWords, getInitialValues } from '../../Util';
 import ScoreBoard from '../ScoreBoard/ScoreBoard'
-
+import Timer from '../Timer/Timer'
 
 export default function Game({ name, difficultyLevel, handlePageNavigation }) {
 
@@ -22,6 +22,7 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
 
     const [difficultyFactor, setDifficultyFactor] = useState(initialDifficultyFactor);
     const [timeLeft, setTimeLeft] = useState(initialTimerValue);
+    const [timerValue, setTimerValue] = useState(initialTimerValue);
     const [randomWord, setRandomWord] = useState(initialRandomWord); 
 
     useEffect(()=>{
@@ -97,7 +98,15 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
         }
     }
 
-    
+    const handleGameEnd = (timeLeft) =>{
+        if(timeLeft === 0) {
+            setGameOver(true);
+            setTotalGames(totalGames.push(gameTime));
+            saveToSessionStorage('totalGames',totalGames);
+            handlePageNavigation('GameEnd', name, level, gameTime)
+        }
+    }
+
     if(inputWord === randomWord) {
         setDifficultyFactor(difficultyFactor + 0.01);
 
@@ -110,25 +119,17 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
             changeWord();
         } 
         
-        setTimeLeft(Math.ceil( randomWord.length / difficultyFactor ));
+        let timer = Math.ceil( randomWord.length / difficultyFactor );
+        setTimeLeft(timer);
+        setTimerValue(timer);
     }
-
- 
-    useEffect(() =>{
-        if(timeLeft === 0) {
-            setGameOver(true);
-            setTotalGames(totalGames.push(gameTime));
-            saveToSessionStorage('totalGames',totalGames);
-
-            return handlePageNavigation('GameEnd', name, level, gameTime)
-        }
-    },[timeLeft, handlePageNavigation, name, level, gameTime, totalGames])
+    
+   
 
     const handleStopGame = () =>{
         handlePageNavigation('GameEnd', name, level, gameTime);
     }
     
-
 
     return (<div className="main">
         
@@ -137,7 +138,10 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
             <div className="game-container">
                 <ScoreBoard />
                 <div className="play-game">
-                    <span className="time-left">{timeLeft.toString()}</span>
+                    <Timer 
+                        remainingTime={timeLeft} 
+                        timeLimit={timerValue}
+                        handleGameEnd={handleGameEnd}  />
                     <div className="random-word">
                         {randomWord}
                     </div>

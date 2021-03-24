@@ -1,6 +1,24 @@
 import { difficultyFactors, difficultyLevels } from './constants'
 import Dictionary from './data/dictionary.json'
 
+const FULL_DASH_ARRAY = 283;
+const WARNING_THRESHOLD = 10;
+const ALERT_THRESHOLD = 2;
+
+export const COLOR_CODES = {
+    info: {
+      color: "green"
+    },
+    warning: {
+      color: "orange",
+      threshold: WARNING_THRESHOLD
+    },
+    alert: {
+      color: "red",
+      threshold: ALERT_THRESHOLD
+    }
+  };
+
 export const saveToSessionStorage = (key, value) => {
     return sessionStorage.setItem(key, JSON.stringify(value));
 }
@@ -15,7 +33,7 @@ export const removeFromSessionStorage = (key) => {
 
 export function convertSecondsToMMSS(seconds) {
     return new Date(seconds * 1000).toISOString().substr(14, 5);
- }
+}
 
  export function convertTimeToString(totalSeconds) {
     var hours = parseInt( totalSeconds / 3600 );
@@ -58,4 +76,16 @@ export function getInitialValues(level) {
    return returnObj;
 
 }
+
+export function calculateTimeFraction(timeLimit, remainingTime) {
+    const rawTimeFraction = remainingTime / timeLimit;
+    return rawTimeFraction - (1 / timeLimit) * (1 - rawTimeFraction);
+  }
+
+export const updateCircleDasharray = (timeLimit, remainingTime) => {
+    return `${(
+      calculateTimeFraction(timeLimit, remainingTime) * FULL_DASH_ARRAY
+    ).toFixed(0)} 283`;
+  }
+
 
