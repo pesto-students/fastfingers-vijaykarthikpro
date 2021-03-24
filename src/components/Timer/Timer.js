@@ -73,10 +73,12 @@ export default function Timer({ remainingTime, timeLimit, handleGameEnd }) {
 
 Timer.propTypes = {
   remainingTime : PropTypes.number.isRequired,
+  timeLimit: PropTypes.number.isRequired,
   handleGameEnd: PropTypes.func.isRequired
 }
 
 Timer.defaultProps = {
   remainingTime: 0,
+  timeLimit: 0,
   handleGameEnd : (() =>{})
 }
