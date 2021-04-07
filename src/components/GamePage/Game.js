@@ -15,7 +15,7 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     const [gameTime, setGameTime] = useState(0);
     const [gameOver, setGameOver] = useState(false);
     const [wordCount, setWordCount] = useState(1);
-    const [matchedWordIndex, setMatchedWordIndex] = useState(0);
+    // const [matchedWordIndex, setMatchedWordIndex] = useState(0);
     const [totalGames, setTotalGames] = useState(getFromSessionStorage('totalGames') || []);
 
     const {initialDifficultyFactor, initialRandomWord, initialTimerValue} = useCallback(getInitialValues(level));
@@ -44,28 +44,28 @@ export default function Game({ name, difficultyLevel, handlePageNavigation }) {
     
     const handleTextChange = (e) => {
         let {target:{value}} = e;
-        const element = document.querySelector(".random-word");
 
+        const element = document.querySelector('.random-word');
         if (randomWord.substring(0, value.length).match(value)) {
 
             const matchedLetters = randomWord.substring( 0, value.length );
             const remainingLetters = randomWord.substring(value.length);
             element.innerHTML = `<span class="green">${matchedLetters}
                                  </span>${remainingLetters}`;
-            setMatchedWordIndex(value.length);
+            // setMatchedWordIndex(value.length);
 
         } else {
 
-            const matchedLetters = randomWord.substring(0, matchedWordIndex);
-            const unMatchedLetters = randomWord.substring(matchedWordIndex, value.length);
+            // const matchedLetters = randomWord.substring(0, matchedWordIndex);
+            const unMatchedLetters = randomWord.substring(0, value.length);
             const remainingLetters = randomWord.substring(value.length);
 
-            element.innerHTML = `<span class="green">${matchedLetters}
-                                 </span><span class="blue">${unMatchedLetters}
+            element.innerHTML = `<span class="blue">${unMatchedLetters}
                                 </span>${remainingLetters}`;
         }
         setInputWord(value);
     }
+
 
     const toInputUppercase = (e) => {
         e.target.value = ("" + e.target.value).toUpperCase();
