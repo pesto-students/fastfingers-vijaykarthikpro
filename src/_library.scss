@@ -1,0 +1,16 @@
+$primary-font-color: #ff5155;
+$cool-grey-two: #97a5a7;
+
+@mixin flex-column-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex-row-center {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
