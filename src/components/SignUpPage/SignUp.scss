@@ -1,231 +1,227 @@
-@use '../../library' as library;
+@use "../../library" as library;
 
 @mixin form-fields-style($font-size, $padding) {
-    font-size: $font-size;
-    padding: $padding;
-    border-radius: 12px;
-    box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.8);
-    outline: none;
+  font-size: $font-size;
+  padding: $padding;
+  border-radius: 12px;
+  box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.8);
+  outline: none;
 }
 
 @mixin placeholder {
-    &::-webkit-input-placeholder {@content}
-    &:-moz-placeholder           {@content}
-    &::-moz-placeholder          {@content}
-    &:-ms-input-placeholder      {@content}  
+  &::-webkit-input-placeholder {
+    @content;
   }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
 
 .container {
+  @include library.flex-column-center;
+  color: library.$primary-font-color;
+  background: linear-gradient(to bottom, black, transparent);
+  height: 100vh;
+
+  .box {
     @include library.flex-column-center;
-    color: library.$primary-font-color;
-    background: linear-gradient(to bottom, black, transparent);
-    height: 100vh;
 
-    .box {
-        @include library.flex-column-center;
-
-        .title {
-            font-size: 80px;
-        }
-    
-        .inner-container {
-            width: 622px;
-    
-            .sub-title {
-                @include library.flex-row-center;
-                justify-content: space-between;
-                
-                .red-line {
-                    height: 0px;
-                    width: 20%;
-                    border: 1px solid library.$primary-font-color;
-                }
-    
-                p {
-                    font-size: 26px;
-                    line-height: 0.2;
-                }
-            }
-    
-        
-            form {
-        
-                display: flex;
-                flex-direction: column;
-                margin: 30px 0 80px 0;
-                
-                input {
-                    @include form-fields-style(35px, 20px);
-                    border: none;
-                    margin: 0;
-                    background-color: library.$cool-grey-two;
-        
-                    @include placeholder {  
-                        color: black;          
-                    }            
-                }
-
-                .error-message {
-                    text-align: start;
-                    line-height: 0;
-                    margin: 10px;
-                    padding: 4px 0 2px 20px;
-                    font-size: 20px;
-                }
-
-                .select-wrapper {
-                    position: relative;
-                    margin-top: 30px;
-
-                    select {
-                        display: flex;
-                        @include form-fields-style(35px, 20px);
-                         border: 1px solid library.$cool-grey-two;
-                         width: 100%;
-                         background-color: transparent;
-                         color: library.$cool-grey-two;
-
-                         -webkit-appearance: none;
-                         -moz-appearance: none;
-                         -ms-appearance: none;
-                         -o-appearance: none;
-                         appearance: none;
-                         
-                         &:invalid {
-                             color: library.$cool-grey-two;
-                         }
-             
-                         option {
-                             color: black;
-                             background-color: library.$cool-grey-two;
-                             font-size: 25px;
-
-                             &:hover::after {
-                                 background-color:#053a45;
-                             }
-                         }
-         
-                     }
-
-                     &:after {
-                        position: absolute;
-                        content: "";
-                        top: 34px;
-                        right: 30px;
-                        width: 0; 
-                        height: 0; 
-                        border-left: 10px solid transparent;
-                        border-right: 10px solid transparent;
-                        border-top: 10px solid;
-                        border-color: #97a4a7 transparent transparent transparent;
-                    }
-
-                }
-        
-                
-            }
-    
-        }
-    
-    
-        .start-game-btn {
-            @include library.flex-row-center;
-            font-size:48px;
-            color: library.$primary-font-color;
-            background: transparent;
-            border: none;
-            outline: none;
-            margin-top: 90px;
-            cursor: pointer;
-    
-            &:hover {
-                transform: scale(1.05);
-            }
-    
-            &:active {
-                transform: scale(1);
-            }
-        }
-
+    img {
+      width: 160px;
     }
 
-    
+    .title {
+      font-size: 50px;
+    }
+
+    .inner-container {
+      width: 622px;
+
+      .sub-title {
+        @include library.flex-row-center;
+        justify-content: space-between;
+
+        .red-line {
+          height: 0px;
+          width: 28%;
+          border: 1px solid library.$primary-font-color;
+        }
+
+        p {
+          font-size: 22px;
+          line-height: 0.2;
+        }
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        margin: 30px 0 0 0;
+
+        input {
+          @include form-fields-style(30px, 18px);
+          border: none;
+          margin: 0;
+          background-color: library.$cool-grey-two;
+
+          @include placeholder {
+            color: black;
+          }
+        }
+
+        .error-message {
+          text-align: start;
+          line-height: 0;
+          margin: 10px;
+          padding: 4px 0 2px 20px;
+          font-size: 20px;
+        }
+
+        .select-wrapper {
+          position: relative;
+          margin-top: 30px;
+
+          select {
+            display: flex;
+            @include form-fields-style(30px, 18px);
+            border: 1px solid library.$cool-grey-two;
+            width: 100%;
+            background-color: transparent;
+            color: library.$cool-grey-two;
+
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -ms-appearance: none;
+            -o-appearance: none;
+            appearance: none;
+
+            &:invalid {
+              color: library.$cool-grey-two;
+            }
+
+            option {
+              color: black;
+              background-color: library.$cool-grey-two;
+              font-size: 22px;
+
+              &:hover::after {
+                background-color: #053a45;
+              }
+            }
+          }
+
+          &:after {
+            position: absolute;
+            content: "";
+            top: 34px;
+            right: 30px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid;
+            border-color: #97a4a7 transparent transparent transparent;
+          }
+        }
+      }
+    }
+
+    .start-game-btn {
+      @include library.flex-row-center;
+      font-size: 32px;
+      color: library.$primary-font-color;
+      background: transparent;
+      border: none;
+      outline: none;
+      margin-top: 90px;
+      cursor: pointer;
+
+      img {
+        width: 80px;
+      }
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      &:active {
+        transform: scale(1);
+      }
+    }
+  }
 }
 
 @media (max-width: 1370px) {
-    .container {
+  .container {
+    .box {
+      img {
+        width: 120px;
+      }
+      .title {
+        font-size: 40px;
+      }
 
-        .box{
+      .inner-container {
+        width: 362px;
 
-            img {
-                width: 120px;
-            }
-            .title {
-                font-size: 40px;
-            }
-    
-            .inner-container {
-                width: 362px;
-    
-                .sub-title {
-                    
-                    p {
-                        font-size: 16px;
-                    }
-                }
-    
-                form {
-                    margin: 20px 0 30px 0;
-    
-                    input {
-                        @include form-fields-style(18px, 16px)
-                    }
-
-                    .error-message {
-                        font-size: 16px;
-                        padding: 2px 0 1px 10px;
-                    }
-
-                    .select-wrapper {
-                        margin-top: 20px;
-
-                        select {
-                            @include form-fields-style(20px, 16px );
-
-                            option {
-                                font-size: 16px;
-                            }
-                        }
-
-                        &:after {
-                            position: absolute;
-                            content: "";
-                            top: 24px;
-                            right: 20px;
-                            width: 0;
-                            height: 0;
-                            border-left: 6px solid transparent;
-                            border-right: 6px solid transparent;
-                            border-top: 6px solid;
-                            border-color: #97a4a7 transparent transparent transparent;
-                         }
-
-                    }
-    
-                    
-                }
-            }
-    
-            .start-game-btn {
-                font-size:28px;
-    
-                img {
-                    width: 50px;
-                }
-            }
+        .sub-title {
+          p {
+            font-size: 16px;
+          }
         }
 
-        }
+        form {
+          margin: 20px 0 30px 0;
 
-        
+          input {
+            @include form-fields-style(18px, 16px);
+          }
+
+          .error-message {
+            font-size: 16px;
+            padding: 2px 0 1px 10px;
+          }
+
+          .select-wrapper {
+            margin-top: 20px;
+
+            select {
+              @include form-fields-style(20px, 16px);
+
+              option {
+                font-size: 16px;
+              }
+            }
+
+            &:after {
+              position: absolute;
+              content: "";
+              top: 24px;
+              right: 20px;
+              width: 0;
+              height: 0;
+              border-left: 6px solid transparent;
+              border-right: 6px solid transparent;
+              border-top: 6px solid;
+              border-color: #97a4a7 transparent transparent transparent;
+            }
+          }
+        }
+      }
+
+      .start-game-btn {
+        font-size: 28px;
+
+        img {
+          width: 50px;
+        }
+      }
+    }
+  }
 }
