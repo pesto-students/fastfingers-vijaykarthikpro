@@ -1,0 +1,84 @@
+@use "../../library" as library;
+
+.score-board {
+  border: library.$primary-font-color solid;
+  border-radius: 10px;
+  width: 300px;
+  display: flex;
+  flex-flow: column;
+  height: 55vh;
+  padding: 10px;
+
+  .title {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 10px; /* Added spacing below title */
+  }
+
+  .games-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    list-style-type: none;
+    color: white;
+    padding: 0 0 0 20px;
+    overflow-y: auto; /* Makes the list scrollable if content exceeds box height */
+    max-height: calc(
+      55vh - 50px
+    ); /* Adjust based on title height and padding */
+
+    li {
+      font-size: 30px;
+      margin-bottom: 5px;
+    }
+
+    /* Custom scrollbar styles */
+    ::-webkit-scrollbar {
+      width: 12px; /* Width of the scrollbar */
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent; /* Track background color */
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: white; /* Thumb color */
+      border-radius: 10px; /* Round the corners of the thumb */
+      border: 3px solid white; /* Border to create a contrast with the track */
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #f1f1f1; /* Color on hover */
+    }
+
+  }
+
+  .personal-best {
+    display: flex;
+    font-size: 20px;
+    color: library.$primary-font-color;
+  }
+}
+
+@media (max-width: 1370px) {
+  .score-board {
+    width: 200px;
+
+    .title {
+      font-size: 20px;
+    }
+
+    .games-list {
+      padding: 0 0 0 18px;
+
+      li {
+        font-size: 20px;
+      }
+    }
+
+    .personal-best {
+      font-size: 10px;
+    }
+  }
+}

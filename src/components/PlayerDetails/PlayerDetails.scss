@@ -1,0 +1,39 @@
+@use "../../library" as library;
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+  line-height: 1.4;
+  font-size: 44px;
+  color: library.$primary-font-color;
+
+  .player-name-level {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .title-score {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
+
+  img {
+    margin: 0 10px 0 0;
+    width: 44px;
+  }
+}
+
+@media (max-width: 1370px) {
+  .header-container {
+    font-size: 32px;
+
+    img {
+      width: 30px;
+    }
+  }
+}
